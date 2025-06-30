@@ -3,6 +3,8 @@ Uso de FIFO queues, tuplas y diccionarios en la clase restaurante.
 
 ## FIFO Queue para manipular múltiples órdenes
 ```python
+from queue import Queue
+
 class OrderQueue: 
     def __init__(self) -> None:
         self.orders = Queue()

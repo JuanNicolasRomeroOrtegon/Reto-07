@@ -46,3 +46,52 @@ order_queue.add_order(order2)
 
 order_queue.process_all()
 ```
+
+## Named Tuple
+```python
+MainCourseTuple = namedtuple(
+    "MainCourseTuple",
+    ["name", "price", "size", "protein", "carbs", "is_vegetarian", 
+    "walnut_allergy", "cereal_allergy", "egg_allergy"]
+)
+```
+Se crea la named tuple.
+
+```python
+plato1 = MainCourseTuple(
+    name="Grilled Chicken",
+    price=15.0,
+    size="regular",
+    protein="Chicken",
+    carbs="Rice",
+    is_vegetarian=False,
+    walnut_allergy=False,
+    cereal_allergy=False,
+    egg_allergy=False
+)
+
+plato2 = MainCourseTuple(
+    name="Vegetarian Lasagna",
+    price=13.5,
+    size="large",
+    protein="Tofu",
+    carbs="Pasta",
+    is_vegetarian=True,
+    walnut_allergy=False,
+    cereal_allergy=True,
+    egg_allergy=False
+)
+
+plato3 = MainCourseTuple(
+    name="Beef Burger",
+    price=12.0,
+    size="small",
+    protein="Beef",
+    carbs="Fries",
+    is_vegetarian=False,
+    walnut_allergy=False,
+    cereal_allergy=False,
+    egg_allergy=True
+)
+```
+Se crean instancias de la named tuple.

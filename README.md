@@ -55,7 +55,7 @@ MainCourseTuple = namedtuple(
     "walnut_allergy", "cereal_allergy", "egg_allergy"]
 )
 ```
-Se crea la named tuple.
+Implementación de la named tuple.
 
 ```python
 plato1 = MainCourseTuple(
@@ -94,4 +94,4 @@ plato3 = MainCourseTuple(
     egg_allergy=True
 )
 ```
-Se crean instancias de la named tuple.
+Instancias de la implementación.

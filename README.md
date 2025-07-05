@@ -29,7 +29,7 @@ class OrderQueue:
             self.process_order()
 ```
 Se añaden y procesan las órdenes de los clientes.
-## Ejemplo de uso: 
+### Ejemplo de uso: 
 
 ```python
 order1 = Order("Juan")
@@ -95,3 +95,83 @@ plato3 = MainCourseTuple(
 )
 ```
 Instancias de la implementación.
+
+
+## Menú implementado con JSON
+
+```python
+class MenuManager:
+
+    def __init__(self, filename: str = "menu.json") -> None:
+        self.filename = filename
+        self.menu = self._load_menu()
+
+    def _load_menu(self) -> dict:
+   
+        try:
+            with open(self.filename, 'r') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            # Empezar con un menu vacío
+            return {}
+
+    def _save_menu(self) -> None:
+        with open(self.filename, 'w') as f:
+            json.dump(self.menu, f, indent=4)
+
+    def add_item(self, category: str, item_name: str, item_details: dict) -> None:
+        if category not in self.menu:
+            self.menu[category] = {}
+        if item_name in self.menu[category]:
+            print(f"Error: Item '{item_name}' already exists in '{category}'.")
+            return
+        self.menu[category][item_name] = item_details
+        self._save_menu()
+        print(f"Successfully added '{item_name}' to the '{category}' menu.")
+
+    def update_item(self, category: str, item_name: str, updated_details: dict) -> None:
+        if category in self.menu and item_name in self.menu[category]:
+            self.menu[category][item_name].update(updated_details)
+            self._save_menu()
+            print(f"Successfully updated '{item_name}' in the '{category}' menu.")
+        else:
+            print(f"Error: Item '{item_name}' not found in '{category}'.")
+
+    def delete_item(self, category: str, item_name: str) -> None:
+        if category in self.menu and item_name in self.menu[category]:
+            del self.menu[category][item_name]
+            if not self.menu[category]:
+                del self.menu[category]
+            self._save_menu()
+            print(f"Successfully deleted '{item_name}' from '{category}'.")
+        else:
+            print(f"Error: Item '{item_name}' not found in '{category}'.")
+```
+
+###
+
+```python
+class Order:
+    def __init__(self, customer_name: str, menu_manager: MenuManager) -> None:
+        self.customer_name: str = customer_name
+        self.items: list[MenuItem] = []
+        self.discount: float = 0
+        self.tax_rate: float = 0.08
+        self.menu_manager = menu_manager
+
+    def add_to_menu(self, category: str, item_name: str, item_details: dict):
+        self.menu_manager.add_item(category, item_name, item_details)
+
+    def update_in_menu(self, category: str, item_name: str, updated_details: dict):
+        self.menu_manager.update_item(category, item_name, updated_details)
+
+    def delete_from_menu(self, category: str, item_name: str):
+        self.menu_manager.delete_item(category, item_name)
+
+    def add_item(self, menu_item: MenuItem, quantity: int = 1) -> None:
+        for _ in range(quantity):
+            if hasattr(menu_item, 'calculate_price'):
+                menu_item.calculate_price()
+            self.items.append(menu_item)
+```
+### Ejemplo de uso: 
